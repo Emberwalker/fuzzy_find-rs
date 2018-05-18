@@ -1,0 +1,64 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "cargo build",
+            "command": "cargo",
+            "args": [
+                "build"
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "windows": {
+                "options": {
+                    "env": {
+                        "PATH": "${env:PATH};C:\\msys64\\mingw32\\bin;"
+                    }
+                }
+            }
+        },
+        {
+            "type": "shell",
+            "label": "cargo check",
+            "command": "cargo",
+            "args": [
+                "check"
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ]
+        },
+        {
+            "type": "shell",
+            "label": "cargo test",
+            "command": "cargo",
+            "args": [
+                "+nightly", // Forces Nightly so to enable the bench tests.
+                "test"
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "cargo bench",
+            "command": "cargo",
+            "args": [
+                "+nightly",
+                "bench"
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ]
+        }
+    ]
+}

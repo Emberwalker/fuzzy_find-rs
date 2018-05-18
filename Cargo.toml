@@ -1,0 +1,14 @@
+[package]
+name = "fuzzy_match"
+version = "0.0.1-pre"
+authors = ["Robert T. <arkan@drakon.io>"]
+publish = false # Not finished yet
+
+[features]
+nightly = []
+
+[build-dependencies]
+rustc_version = "0.1"
+
+[dependencies]
+sliding_windows = "3.0"
