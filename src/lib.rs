@@ -4,7 +4,7 @@
 //! assosciated with each candidate string. This crate is based in large part on the awesome
 //! [`fuzzy_match` Ruby gem](https://github.com/seamusabshere/fuzzy_match), but this crate only implements the basic
 //! functionality and skips the more advanced functionality for now.
-#![feature(test)]
+#![cfg_attr(all(feature = "nightly", test), feature(test))]
 
 extern crate sliding_windows;
 #[cfg(all(feature = "nightly", test))] extern crate test;
