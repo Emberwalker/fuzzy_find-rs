@@ -26,8 +26,10 @@ pub(crate) mod util;
 /// 
 /// # Panics
 /// This function will panic if the haystack is empty (length 0).
-pub fn fuzzy_match<T>(needle: &str, haystack: Vec<(&str, T)>) -> Option<T> {
-    fuzzy_match_with_algorithms::<T, algorithms::SorensenDice, algorithms::Levenshtein>(needle, haystack)
+pub fn fuzzy_match<'a, T, It>(needle: &str, haystack: It) -> Option<T> 
+    where It: IntoIterator<Item = (&'a str, T)>
+{
+    fuzzy_match_with_algorithms::<T, algorithms::SorensenDice, algorithms::Levenshtein, It>(needle, haystack)
 }
 
 /// Version of [`fuzzy_match`](fuzzy_match::fuzzy_match) which allows overriding the first and second choice algorithms,
@@ -45,20 +47,26 @@ pub fn fuzzy_match<T>(needle: &str, haystack: Vec<(&str, T)>) -> Option<T> {
 /// 
 /// # Panics
 /// This function will panic if the haystack is empty (length 0).
-pub fn fuzzy_match_with_algorithms<T, FST: algorithms::SimilarityAlgorithm, SND: algorithms::SimilarityAlgorithm>(
+pub fn fuzzy_match_with_algorithms<'a, T, FST, SND, It>(
     needle: &str,
-    mut haystack: Vec<(&str, T)>,
-) -> Option<T> {
-    if haystack.len() == 0 {
-        panic!("No haystack provided!");
+    haystack: It) -> Option<T> 
+    where FST: algorithms::SimilarityAlgorithm,
+          SND: algorithms::SimilarityAlgorithm,
+          It: IntoIterator<Item = (&'a str, T)>
+{
+
+    let mut iter = haystack.into_iter().peekable();
+
+    if iter.peek().is_none() {
+        panic!("No haystack provided!")
     }
 
     let mut highest_set: Vec<(&str, T)> = Vec::new();
     let mut highest_weight = 0f32;
-    let mut first_algo = FST::new();
+    let mut first_algo = FST::new();    
 
     // Try with first-case algorithm.
-    for (name, item) in haystack.drain(..) {
+    for (name, item) in iter {
         let weight = first_algo.get_similarity(needle, name);
         if weight == highest_weight {
             highest_set.push((name, item))
