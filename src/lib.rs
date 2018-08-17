@@ -42,7 +42,7 @@ pub fn fuzzy_match<'a, T, It>(needle: &str, haystack: It) -> Option<T>
 ///
 /// let haystack = vec![("rust", 0), ("java", 1), ("lisp", 2)];
 /// // Search with Levenshtein first, then Sorensen-Dice.
-/// assert_eq!(Some(0), fuzzy_match_with_algorithms::<_, Levenshtein, SorensenDice>("bust", haystack));
+/// assert_eq!(Some(0), fuzzy_match_with_algorithms::<_, Levenshtein, SorensenDice, _>("bust", haystack));
 /// ```
 /// 
 /// # Panics
