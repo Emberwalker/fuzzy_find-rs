@@ -1,6 +1,6 @@
 [package]
 name = "fuzzy_match"
-version = "0.1.1"
+version = "0.2.1"
 authors = ["Robert T. <arkan@drakon.io>"]
 description = "A crate for fuzzy finding items in sets, based on the Ruby fuzzy_find gem."
 homepage = "https://github.com/Emberwalker/fuzzy_find-rs/"
